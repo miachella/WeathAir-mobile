@@ -9,6 +9,10 @@ ion-menu-button {
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+  .goButton{
+    position: absolute;
+    right: 10px;
+  }
 }
 
 #container strong {

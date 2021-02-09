@@ -14,8 +14,15 @@
     </ion-toolbar>
   </ion-header>
 
+
   <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-img [src]="selectedImage" (click)="showEditPopup()"></ion-img>
+    <h2>Créez votre alerte</h2>
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea autoGrow="true" [formControl]="textForm.controls.text"></ion-textarea>
+    </ion-item>
+    <ion-button class="goButton" size="small" slot="end" (click)="sendAlert()">Go!</ion-button>
+
   </div>
 </ion-content>
