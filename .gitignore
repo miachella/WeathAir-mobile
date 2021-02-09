@@ -83,3 +83,13 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+.*
+ionic.config.json
+karma.conf.js
+e2e/
+node_modules/
+www/
+plugins/
+resources/
+platforms/
