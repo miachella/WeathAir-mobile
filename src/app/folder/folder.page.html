@@ -1,3 +1,4 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -16,11 +17,20 @@
 
 
   <div id="container">
-    <ion-img [src]="selectedImage" (click)="showEditPopup()"></ion-img>
-    <h2>Créez votre alerte</h2>
+    <ion-title class="title">Créez votre alerte</ion-title>
+    <ion-img [src]="selectedImage" class="image"></ion-img>
+    <ion-button (click)="showEditPopup()">Téléchargez votre image</ion-button>
     <ion-item>
       <ion-label position="floating">Description</ion-label>
       <ion-textarea autoGrow="true" [formControl]="textForm.controls.text"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Commune</ion-label>
+      <ionic-selectable item-content [formControl]="textForm.controls.township" itemTextField="name" [items]="options" [canSearch]="true"
+		 (onChange)="townshipChange($event)">
+		</ionic-selectable>
+ 
+ 
     </ion-item>
     <ion-button class="goButton" size="small" slot="end" (click)="sendAlert()">Go!</ion-button>
 

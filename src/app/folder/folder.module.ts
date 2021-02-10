@@ -8,7 +8,7 @@ import { FolderPageRoutingModule } from './folder-routing.module';
 
 import { FolderPage } from './folder.page';
 import { HttpClientModule } from '@angular/common/http';
-
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     IonicModule,
-    FolderPageRoutingModule
+    FolderPageRoutingModule,
+    IonicSelectableModule
   ],
   declarations: [FolderPage] 
 })
