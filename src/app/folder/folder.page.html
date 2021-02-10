@@ -25,9 +25,9 @@
       <ion-textarea autoGrow="true" [formControl]="textForm.controls.text"></ion-textarea>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Commune</ion-label>
+      <ion-label position="floating" onclick="presentLoading()">Commune</ion-label>
       <ionic-selectable item-content [formControl]="textForm.controls.township" itemTextField="name" [items]="options" [canSearch]="true"
-		 (onChange)="townshipChange($event)">
+		 (onChange)="townshipChange($event)" >
 		</ionic-selectable>
  
  

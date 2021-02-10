@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Alert, Township } from "./alert.model";
 import { Observable } from "rxjs";
-
+import { delay } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
@@ -20,12 +20,15 @@ export class FolderService {
         return this.http.get<Township[]>(`https://demo6510050.mockable.io/api/townships`);    
     }
 
-    filter(name: string): Township[] | void {
-        const filterValue = name.toLowerCase();
-        this.getTownships().subscribe(res => {
-            return res.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0)
-            .slice(0, 5);
-        }, err => console.log(err))
-    }
+    // getTownshipsAsync(timeout = 1000): Observable<Township[]> {
+    //     return new Observable<Township[]>(observer => {
+    //      this.getTownships().subscribe(res => {
+    //           observer.next(res)
+    //       });
+    //       observer.complete();
+    //     }).pipe(delay(timeout));
+    //   }
+
+
 
 }

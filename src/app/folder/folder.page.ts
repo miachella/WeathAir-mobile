@@ -6,10 +6,10 @@ import { FolderService } from './core/folder.service';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Township } from './core/alert.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from "rxjs/operators";
 import { IonicSelectableComponent } from 'ionic-selectable';
-
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-folder',
@@ -23,6 +23,7 @@ export class FolderPage implements OnInit {
   textForm: FormGroup = new FormGroup({});
   options: Township[] = [];
   filteredOptions: Observable<any[]>;
+  townshipSubscription : Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,13 +32,13 @@ export class FolderPage implements OnInit {
     public actionSheetController: ActionSheetController,
     private camera: Camera,
     private webview : WebView, 
-    public toastController: ToastController
+    public toastController: ToastController,
+    public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.folderService.getTownships().subscribe(res => {
       this.options = res
-      console.log(res);
     }, err => console.log(err))
     this.textForm = this.formBuilder.group({
       text: ['', Validators.required], 
@@ -80,11 +81,16 @@ export class FolderPage implements OnInit {
 
 
   async showEditPopup() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 150
+    })
+    await loading.present();
     const actionRef = await this.actionSheetController.create({
-      header: 'Choisir votre source',
+      header: 'Choisissez votre source',
       buttons: [
         {
-          text: 'Depuis caméra',
+          text: 'Depuis votre caméra',
           role: 'destructive',
           icon: 'camera-outline',
           handler: () => {
@@ -118,4 +124,50 @@ export class FolderPage implements OnInit {
     console.log('township:', event.value);
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 1000
+    });
+    await loading.present();
+  }
+
+  // filterTownships(town: Township[], name: string) {
+  //   return town.filter(city => {
+  //     return city.name.toLowerCase().indexOf(name) !== -1 
+  //   })}
+
+
+  // searchTownships(event: {
+  //   component: IonicSelectableComponent,
+  //   text: string
+  // }) {
+  //   let name = event.text.trim().toLowerCase();
+  //   event.component.startSearch();
+
+  //   // Close any running subscription.
+  //   if (this.townshipSubscription) {
+  //     this.townshipSubscription.unsubscribe();
+  //   }
+
+  //   if (!name) {
+  //     // Close any running subscription.
+  //     if (this.townshipSubscription) {
+  //       this.townshipSubscription.unsubscribe();
+  //     }
+
+  //     event.component.items = [];
+  //     event.component.endSearch();
+  //     return;
+  //   }
+
+  //   this.townshipSubscription = this.folderService.getTownshipsAsync().subscribe(town => {
+  //     // Subscription will be closed when unsubscribed manually.
+  //     if (this.townshipSubscription.closed) {
+  //       return;
+  //     }
+  //     event.component.items = this.filterTownships(town, name);
+  //     event.component.endSearch();
+  //   });
+  // }
 }
