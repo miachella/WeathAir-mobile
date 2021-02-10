@@ -9,7 +9,7 @@ import { Township } from './core/alert.model';
 import { Observable } from 'rxjs';
 import { map, startWith } from "rxjs/operators";
 import { IonicSelectableComponent } from 'ionic-selectable';
-
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-folder',
@@ -31,13 +31,13 @@ export class FolderPage implements OnInit {
     public actionSheetController: ActionSheetController,
     private camera: Camera,
     private webview : WebView, 
-    public toastController: ToastController
+    public toastController: ToastController,
+    public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.folderService.getTownships().subscribe(res => {
       this.options = res
-      console.log(res);
     }, err => console.log(err))
     this.textForm = this.formBuilder.group({
       text: ['', Validators.required], 
@@ -80,11 +80,16 @@ export class FolderPage implements OnInit {
 
 
   async showEditPopup() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 150
+    })
+    await loading.present();
     const actionRef = await this.actionSheetController.create({
-      header: 'Choisir votre source',
+      header: 'Choisissez votre source',
       buttons: [
         {
-          text: 'Depuis caméra',
+          text: 'Depuis votre caméra',
           role: 'destructive',
           icon: 'camera-outline',
           handler: () => {
@@ -116,6 +121,14 @@ export class FolderPage implements OnInit {
     value: any
   }) {
     console.log('township:', event.value);
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 6000
+    });
+    await loading.present();
   }
 
 }
