@@ -1,3 +1,4 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -25,10 +26,11 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Commune</ion-label>
-      <!-- <ion-input [formControl]="textForm.controls.township"></ion-input> -->
-      <ionic-selectable item-content [formControl]="textForm.controls.township" itemValueField="id" itemTextField="name" [items]="townships" [canSearch]="true"
+      <ionic-selectable item-content [formControl]="textForm.controls.township" itemTextField="name" [items]="options" [canSearch]="true"
 		 (onChange)="townshipChange($event)">
 		</ionic-selectable>
+ 
+ 
     </ion-item>
     <ion-button class="goButton" size="small" slot="end" (click)="sendAlert()">Go!</ion-button>
 

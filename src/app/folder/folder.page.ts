@@ -8,7 +8,6 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Township } from './core/alert.model';
 import { Observable } from 'rxjs';
 import { map, startWith } from "rxjs/operators";
-import { AutocompleteProvider } from './core/autocomplete.service';
 import { IonicSelectableComponent } from 'ionic-selectable';
 
 
@@ -38,18 +37,14 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.folderService.getTownships().subscribe(res => {
       this.options = res
+      console.log(res);
     }, err => console.log(err))
     this.textForm = this.formBuilder.group({
       text: ['', Validators.required], 
       township: ['', Validators.required]
     })
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
-    // this.filteredOptions = this.textForm.get('township').valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(value => typeof value === 'string' ? value : value.name),
-    //     map(name => name ? this._filter(name) : this.options.slice())
-    //   )
+
   }
 
   sendAlert(){
@@ -115,19 +110,6 @@ export class FolderPage implements OnInit {
   displayFn(township: any): string {
     return township && township.name ? township.name : '';
   }
-
-  // loadCities() {
-  //   return this.folderService.getTownships().subscribe( 
-  //     result => {
-  //       this.options = result;
-  //       console.log(result);
-  //       this.changeDetectorRef.detectChanges();
-  //     }, err => {
-  //       this.changeDetectorRef.detectChanges();
-  //       console.log(err);
-  //     }
-  //   )
-  // }
 
   townshipChange(event: {
     component: IonicSelectableComponent,
