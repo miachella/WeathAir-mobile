@@ -27,7 +27,7 @@
     <ion-item>
       <ion-label position="floating" onclick="presentLoading()">Commune</ion-label>
       <ionic-selectable item-content [formControl]="textForm.controls.township" itemTextField="name" [items]="options" [canSearch]="true"
-		 (onChange)="townshipChange($event)">
+		 (onChange)="townshipChange($event)" >
 		</ionic-selectable>
  
  
